@@ -13,7 +13,14 @@ const twilioUtils = require('./twilioUtils');
 // Map to store scheduled reminder jobs by appointment ID
 const reminderJobs = new Map();
 
-mongoose.connect('mongodb://localhost:27017/Hospital');
+mongoose.connect(
+  'mongodb://admin:qwerty@mongo:27017/Hospital?authSource=admin',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
+
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -1236,6 +1243,6 @@ app.get('/patient/billing/receipt/html/:id', async (req, res) => {
     }
 });
 
-app.listen(5085, () => {
+app.listen(5085, '0.0.0.0', () => {
     console.log('Serving on port 5085');
 });
